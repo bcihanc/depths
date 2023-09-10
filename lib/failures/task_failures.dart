@@ -26,9 +26,15 @@ sealed class TaskFailure with _$TaskFailure {
 
   factory TaskFailure.model({
     required Type expected,
+    Object? error,
+    StackTrace? stackTrace,
   }) = TaskFailureModel;
 
   factory TaskFailure.missingField({
     required String field,
   }) = TaskFailureMissingField;
+
+  factory TaskFailure.nullField({
+    required String field,
+  }) = TaskFailureNullField;
 }

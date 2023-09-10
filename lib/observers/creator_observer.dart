@@ -1,6 +1,7 @@
 import 'package:creator_core/creator_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 class DepthsCreatorObserver extends CreatorObserver {
   final _logger = Logger(
@@ -55,9 +56,9 @@ class DepthsCreatorObserver extends CreatorObserver {
       return;
     }
     if (logState) {
-      _logger.i('[Creator] ${creator.infoName}: $after');
+      _logger.i('CREATOR => ${creator.infoName}: $after');
     } else {
-      _logger.i('[Creator][Change] ${creator.infoName}');
+      _logger.i('CREATOR STATE CHANGE => ${creator.infoName}');
     }
   }
 
@@ -69,7 +70,7 @@ class DepthsCreatorObserver extends CreatorObserver {
     if (!logError || ignore(creator)) {
       return;
     }
-    _logger.e('[Creator][Error] ${creator.infoName}: $error\n$stackTrace');
+    _logger.e('${creator.infoName}: $error', stackTrace: stackTrace == null ? null : Trace.from(stackTrace), error: '🔥 CREATOR => $error');
   }
 
   @override
@@ -80,15 +81,14 @@ class DepthsCreatorObserver extends CreatorObserver {
     if (!logDispose || ignore(creator)) {
       return;
     }
-    _logger.w('[Creator][Dispose] ${creator.infoName}');
+    _logger.i('CREATOR DISPOSE => ${creator.infoName}');
   }
 
   /// Ignore a few derived creators to reduce log amount.
   bool ignore(CreatorBase creator) {
     if (creator.name == 'watcher' || creator.name == 'listener') {
       return !logWatcher;
-    } else if ((creator.name?.endsWith('_asyncData') ?? false) ||
-        (creator.name?.endsWith('_change') ?? false)) {
+    } else if ((creator.name?.endsWith('_asyncData') ?? false) || (creator.name?.endsWith('_change') ?? false)) {
       return !logDerived;
     }
     return false;

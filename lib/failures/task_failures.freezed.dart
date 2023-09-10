@@ -22,8 +22,11 @@ mixin _$TaskFailure {
     required TResult Function(int expected, int? actual) statusCode,
     required TResult Function(Type expected, Type actual) cast,
     required TResult Function(dynamic source) jsonDecode,
-    required TResult Function(Type expected) model,
+    required TResult Function(
+            Type expected, Object? error, StackTrace? stackTrace)
+        model,
     required TResult Function(String field) missingField,
+    required TResult Function(String field) nullField,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -32,8 +35,10 @@ mixin _$TaskFailure {
     TResult? Function(int expected, int? actual)? statusCode,
     TResult? Function(Type expected, Type actual)? cast,
     TResult? Function(dynamic source)? jsonDecode,
-    TResult? Function(Type expected)? model,
+    TResult? Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult? Function(String field)? missingField,
+    TResult? Function(String field)? nullField,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -42,8 +47,10 @@ mixin _$TaskFailure {
     TResult Function(int expected, int? actual)? statusCode,
     TResult Function(Type expected, Type actual)? cast,
     TResult Function(dynamic source)? jsonDecode,
-    TResult Function(Type expected)? model,
+    TResult Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult Function(String field)? missingField,
+    TResult Function(String field)? nullField,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -55,6 +62,7 @@ mixin _$TaskFailure {
     required TResult Function(TaskFailureJsonDecode value) jsonDecode,
     required TResult Function(TaskFailureModel value) model,
     required TResult Function(TaskFailureMissingField value) missingField,
+    required TResult Function(TaskFailureNullField value) nullField,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,6 +73,7 @@ mixin _$TaskFailure {
     TResult? Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult? Function(TaskFailureModel value)? model,
     TResult? Function(TaskFailureMissingField value)? missingField,
+    TResult? Function(TaskFailureNullField value)? nullField,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -75,6 +84,7 @@ mixin _$TaskFailure {
     TResult Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult Function(TaskFailureModel value)? model,
     TResult Function(TaskFailureMissingField value)? missingField,
+    TResult Function(TaskFailureNullField value)? nullField,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -168,8 +178,11 @@ class _$TaskFailureRequest implements TaskFailureRequest {
     required TResult Function(int expected, int? actual) statusCode,
     required TResult Function(Type expected, Type actual) cast,
     required TResult Function(dynamic source) jsonDecode,
-    required TResult Function(Type expected) model,
+    required TResult Function(
+            Type expected, Object? error, StackTrace? stackTrace)
+        model,
     required TResult Function(String field) missingField,
+    required TResult Function(String field) nullField,
   }) {
     return request(exception);
   }
@@ -181,8 +194,10 @@ class _$TaskFailureRequest implements TaskFailureRequest {
     TResult? Function(int expected, int? actual)? statusCode,
     TResult? Function(Type expected, Type actual)? cast,
     TResult? Function(dynamic source)? jsonDecode,
-    TResult? Function(Type expected)? model,
+    TResult? Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult? Function(String field)? missingField,
+    TResult? Function(String field)? nullField,
   }) {
     return request?.call(exception);
   }
@@ -194,8 +209,10 @@ class _$TaskFailureRequest implements TaskFailureRequest {
     TResult Function(int expected, int? actual)? statusCode,
     TResult Function(Type expected, Type actual)? cast,
     TResult Function(dynamic source)? jsonDecode,
-    TResult Function(Type expected)? model,
+    TResult Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult Function(String field)? missingField,
+    TResult Function(String field)? nullField,
     required TResult orElse(),
   }) {
     if (request != null) {
@@ -213,6 +230,7 @@ class _$TaskFailureRequest implements TaskFailureRequest {
     required TResult Function(TaskFailureJsonDecode value) jsonDecode,
     required TResult Function(TaskFailureModel value) model,
     required TResult Function(TaskFailureMissingField value) missingField,
+    required TResult Function(TaskFailureNullField value) nullField,
   }) {
     return request(this);
   }
@@ -226,6 +244,7 @@ class _$TaskFailureRequest implements TaskFailureRequest {
     TResult? Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult? Function(TaskFailureModel value)? model,
     TResult? Function(TaskFailureMissingField value)? missingField,
+    TResult? Function(TaskFailureNullField value)? nullField,
   }) {
     return request?.call(this);
   }
@@ -239,6 +258,7 @@ class _$TaskFailureRequest implements TaskFailureRequest {
     TResult Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult Function(TaskFailureModel value)? model,
     TResult Function(TaskFailureMissingField value)? missingField,
+    TResult Function(TaskFailureNullField value)? nullField,
     required TResult orElse(),
   }) {
     if (request != null) {
@@ -336,8 +356,11 @@ class _$TaskFailureStatusCode implements TaskFailureStatusCode {
     required TResult Function(int expected, int? actual) statusCode,
     required TResult Function(Type expected, Type actual) cast,
     required TResult Function(dynamic source) jsonDecode,
-    required TResult Function(Type expected) model,
+    required TResult Function(
+            Type expected, Object? error, StackTrace? stackTrace)
+        model,
     required TResult Function(String field) missingField,
+    required TResult Function(String field) nullField,
   }) {
     return statusCode(expected, actual);
   }
@@ -349,8 +372,10 @@ class _$TaskFailureStatusCode implements TaskFailureStatusCode {
     TResult? Function(int expected, int? actual)? statusCode,
     TResult? Function(Type expected, Type actual)? cast,
     TResult? Function(dynamic source)? jsonDecode,
-    TResult? Function(Type expected)? model,
+    TResult? Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult? Function(String field)? missingField,
+    TResult? Function(String field)? nullField,
   }) {
     return statusCode?.call(expected, actual);
   }
@@ -362,8 +387,10 @@ class _$TaskFailureStatusCode implements TaskFailureStatusCode {
     TResult Function(int expected, int? actual)? statusCode,
     TResult Function(Type expected, Type actual)? cast,
     TResult Function(dynamic source)? jsonDecode,
-    TResult Function(Type expected)? model,
+    TResult Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult Function(String field)? missingField,
+    TResult Function(String field)? nullField,
     required TResult orElse(),
   }) {
     if (statusCode != null) {
@@ -381,6 +408,7 @@ class _$TaskFailureStatusCode implements TaskFailureStatusCode {
     required TResult Function(TaskFailureJsonDecode value) jsonDecode,
     required TResult Function(TaskFailureModel value) model,
     required TResult Function(TaskFailureMissingField value) missingField,
+    required TResult Function(TaskFailureNullField value) nullField,
   }) {
     return statusCode(this);
   }
@@ -394,6 +422,7 @@ class _$TaskFailureStatusCode implements TaskFailureStatusCode {
     TResult? Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult? Function(TaskFailureModel value)? model,
     TResult? Function(TaskFailureMissingField value)? missingField,
+    TResult? Function(TaskFailureNullField value)? nullField,
   }) {
     return statusCode?.call(this);
   }
@@ -407,6 +436,7 @@ class _$TaskFailureStatusCode implements TaskFailureStatusCode {
     TResult Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult Function(TaskFailureModel value)? model,
     TResult Function(TaskFailureMissingField value)? missingField,
+    TResult Function(TaskFailureNullField value)? nullField,
     required TResult orElse(),
   }) {
     if (statusCode != null) {
@@ -505,8 +535,11 @@ class _$TaskFailureCast implements TaskFailureCast {
     required TResult Function(int expected, int? actual) statusCode,
     required TResult Function(Type expected, Type actual) cast,
     required TResult Function(dynamic source) jsonDecode,
-    required TResult Function(Type expected) model,
+    required TResult Function(
+            Type expected, Object? error, StackTrace? stackTrace)
+        model,
     required TResult Function(String field) missingField,
+    required TResult Function(String field) nullField,
   }) {
     return cast(expected, actual);
   }
@@ -518,8 +551,10 @@ class _$TaskFailureCast implements TaskFailureCast {
     TResult? Function(int expected, int? actual)? statusCode,
     TResult? Function(Type expected, Type actual)? cast,
     TResult? Function(dynamic source)? jsonDecode,
-    TResult? Function(Type expected)? model,
+    TResult? Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult? Function(String field)? missingField,
+    TResult? Function(String field)? nullField,
   }) {
     return cast?.call(expected, actual);
   }
@@ -531,8 +566,10 @@ class _$TaskFailureCast implements TaskFailureCast {
     TResult Function(int expected, int? actual)? statusCode,
     TResult Function(Type expected, Type actual)? cast,
     TResult Function(dynamic source)? jsonDecode,
-    TResult Function(Type expected)? model,
+    TResult Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult Function(String field)? missingField,
+    TResult Function(String field)? nullField,
     required TResult orElse(),
   }) {
     if (cast != null) {
@@ -550,6 +587,7 @@ class _$TaskFailureCast implements TaskFailureCast {
     required TResult Function(TaskFailureJsonDecode value) jsonDecode,
     required TResult Function(TaskFailureModel value) model,
     required TResult Function(TaskFailureMissingField value) missingField,
+    required TResult Function(TaskFailureNullField value) nullField,
   }) {
     return cast(this);
   }
@@ -563,6 +601,7 @@ class _$TaskFailureCast implements TaskFailureCast {
     TResult? Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult? Function(TaskFailureModel value)? model,
     TResult? Function(TaskFailureMissingField value)? missingField,
+    TResult? Function(TaskFailureNullField value)? nullField,
   }) {
     return cast?.call(this);
   }
@@ -576,6 +615,7 @@ class _$TaskFailureCast implements TaskFailureCast {
     TResult Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult Function(TaskFailureModel value)? model,
     TResult Function(TaskFailureMissingField value)? missingField,
+    TResult Function(TaskFailureNullField value)? nullField,
     required TResult orElse(),
   }) {
     if (cast != null) {
@@ -667,8 +707,11 @@ class _$TaskFailureJsonDecode implements TaskFailureJsonDecode {
     required TResult Function(int expected, int? actual) statusCode,
     required TResult Function(Type expected, Type actual) cast,
     required TResult Function(dynamic source) jsonDecode,
-    required TResult Function(Type expected) model,
+    required TResult Function(
+            Type expected, Object? error, StackTrace? stackTrace)
+        model,
     required TResult Function(String field) missingField,
+    required TResult Function(String field) nullField,
   }) {
     return jsonDecode(source);
   }
@@ -680,8 +723,10 @@ class _$TaskFailureJsonDecode implements TaskFailureJsonDecode {
     TResult? Function(int expected, int? actual)? statusCode,
     TResult? Function(Type expected, Type actual)? cast,
     TResult? Function(dynamic source)? jsonDecode,
-    TResult? Function(Type expected)? model,
+    TResult? Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult? Function(String field)? missingField,
+    TResult? Function(String field)? nullField,
   }) {
     return jsonDecode?.call(source);
   }
@@ -693,8 +738,10 @@ class _$TaskFailureJsonDecode implements TaskFailureJsonDecode {
     TResult Function(int expected, int? actual)? statusCode,
     TResult Function(Type expected, Type actual)? cast,
     TResult Function(dynamic source)? jsonDecode,
-    TResult Function(Type expected)? model,
+    TResult Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult Function(String field)? missingField,
+    TResult Function(String field)? nullField,
     required TResult orElse(),
   }) {
     if (jsonDecode != null) {
@@ -712,6 +759,7 @@ class _$TaskFailureJsonDecode implements TaskFailureJsonDecode {
     required TResult Function(TaskFailureJsonDecode value) jsonDecode,
     required TResult Function(TaskFailureModel value) model,
     required TResult Function(TaskFailureMissingField value) missingField,
+    required TResult Function(TaskFailureNullField value) nullField,
   }) {
     return jsonDecode(this);
   }
@@ -725,6 +773,7 @@ class _$TaskFailureJsonDecode implements TaskFailureJsonDecode {
     TResult? Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult? Function(TaskFailureModel value)? model,
     TResult? Function(TaskFailureMissingField value)? missingField,
+    TResult? Function(TaskFailureNullField value)? nullField,
   }) {
     return jsonDecode?.call(this);
   }
@@ -738,6 +787,7 @@ class _$TaskFailureJsonDecode implements TaskFailureJsonDecode {
     TResult Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult Function(TaskFailureModel value)? model,
     TResult Function(TaskFailureMissingField value)? missingField,
+    TResult Function(TaskFailureNullField value)? nullField,
     required TResult orElse(),
   }) {
     if (jsonDecode != null) {
@@ -763,7 +813,7 @@ abstract class _$$TaskFailureModelCopyWith<$Res> {
           _$TaskFailureModel value, $Res Function(_$TaskFailureModel) then) =
       __$$TaskFailureModelCopyWithImpl<$Res>;
   @useResult
-  $Res call({Type expected});
+  $Res call({Type expected, Object? error, StackTrace? stackTrace});
 }
 
 /// @nodoc
@@ -778,12 +828,19 @@ class __$$TaskFailureModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? expected = null,
+    Object? error = freezed,
+    Object? stackTrace = freezed,
   }) {
     return _then(_$TaskFailureModel(
       expected: null == expected
           ? _value.expected
           : expected // ignore: cast_nullable_to_non_nullable
               as Type,
+      error: freezed == error ? _value.error : error,
+      stackTrace: freezed == stackTrace
+          ? _value.stackTrace
+          : stackTrace // ignore: cast_nullable_to_non_nullable
+              as StackTrace?,
     ));
   }
 }
@@ -791,14 +848,18 @@ class __$$TaskFailureModelCopyWithImpl<$Res>
 /// @nodoc
 
 class _$TaskFailureModel implements TaskFailureModel {
-  _$TaskFailureModel({required this.expected});
+  _$TaskFailureModel({required this.expected, this.error, this.stackTrace});
 
   @override
   final Type expected;
+  @override
+  final Object? error;
+  @override
+  final StackTrace? stackTrace;
 
   @override
   String toString() {
-    return 'TaskFailure.model(expected: $expected)';
+    return 'TaskFailure.model(expected: $expected, error: $error, stackTrace: $stackTrace)';
   }
 
   @override
@@ -807,11 +868,15 @@ class _$TaskFailureModel implements TaskFailureModel {
         (other.runtimeType == runtimeType &&
             other is _$TaskFailureModel &&
             (identical(other.expected, expected) ||
-                other.expected == expected));
+                other.expected == expected) &&
+            const DeepCollectionEquality().equals(other.error, error) &&
+            (identical(other.stackTrace, stackTrace) ||
+                other.stackTrace == stackTrace));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, expected);
+  int get hashCode => Object.hash(runtimeType, expected,
+      const DeepCollectionEquality().hash(error), stackTrace);
 
   @JsonKey(ignore: true)
   @override
@@ -826,10 +891,13 @@ class _$TaskFailureModel implements TaskFailureModel {
     required TResult Function(int expected, int? actual) statusCode,
     required TResult Function(Type expected, Type actual) cast,
     required TResult Function(dynamic source) jsonDecode,
-    required TResult Function(Type expected) model,
+    required TResult Function(
+            Type expected, Object? error, StackTrace? stackTrace)
+        model,
     required TResult Function(String field) missingField,
+    required TResult Function(String field) nullField,
   }) {
-    return model(expected);
+    return model(expected, error, stackTrace);
   }
 
   @override
@@ -839,10 +907,12 @@ class _$TaskFailureModel implements TaskFailureModel {
     TResult? Function(int expected, int? actual)? statusCode,
     TResult? Function(Type expected, Type actual)? cast,
     TResult? Function(dynamic source)? jsonDecode,
-    TResult? Function(Type expected)? model,
+    TResult? Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult? Function(String field)? missingField,
+    TResult? Function(String field)? nullField,
   }) {
-    return model?.call(expected);
+    return model?.call(expected, error, stackTrace);
   }
 
   @override
@@ -852,12 +922,14 @@ class _$TaskFailureModel implements TaskFailureModel {
     TResult Function(int expected, int? actual)? statusCode,
     TResult Function(Type expected, Type actual)? cast,
     TResult Function(dynamic source)? jsonDecode,
-    TResult Function(Type expected)? model,
+    TResult Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult Function(String field)? missingField,
+    TResult Function(String field)? nullField,
     required TResult orElse(),
   }) {
     if (model != null) {
-      return model(expected);
+      return model(expected, error, stackTrace);
     }
     return orElse();
   }
@@ -871,6 +943,7 @@ class _$TaskFailureModel implements TaskFailureModel {
     required TResult Function(TaskFailureJsonDecode value) jsonDecode,
     required TResult Function(TaskFailureModel value) model,
     required TResult Function(TaskFailureMissingField value) missingField,
+    required TResult Function(TaskFailureNullField value) nullField,
   }) {
     return model(this);
   }
@@ -884,6 +957,7 @@ class _$TaskFailureModel implements TaskFailureModel {
     TResult? Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult? Function(TaskFailureModel value)? model,
     TResult? Function(TaskFailureMissingField value)? missingField,
+    TResult? Function(TaskFailureNullField value)? nullField,
   }) {
     return model?.call(this);
   }
@@ -897,6 +971,7 @@ class _$TaskFailureModel implements TaskFailureModel {
     TResult Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult Function(TaskFailureModel value)? model,
     TResult Function(TaskFailureMissingField value)? missingField,
+    TResult Function(TaskFailureNullField value)? nullField,
     required TResult orElse(),
   }) {
     if (model != null) {
@@ -907,9 +982,14 @@ class _$TaskFailureModel implements TaskFailureModel {
 }
 
 abstract class TaskFailureModel implements TaskFailure {
-  factory TaskFailureModel({required final Type expected}) = _$TaskFailureModel;
+  factory TaskFailureModel(
+      {required final Type expected,
+      final Object? error,
+      final StackTrace? stackTrace}) = _$TaskFailureModel;
 
   Type get expected;
+  Object? get error;
+  StackTrace? get stackTrace;
   @JsonKey(ignore: true)
   _$$TaskFailureModelCopyWith<_$TaskFailureModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -984,8 +1064,11 @@ class _$TaskFailureMissingField implements TaskFailureMissingField {
     required TResult Function(int expected, int? actual) statusCode,
     required TResult Function(Type expected, Type actual) cast,
     required TResult Function(dynamic source) jsonDecode,
-    required TResult Function(Type expected) model,
+    required TResult Function(
+            Type expected, Object? error, StackTrace? stackTrace)
+        model,
     required TResult Function(String field) missingField,
+    required TResult Function(String field) nullField,
   }) {
     return missingField(field);
   }
@@ -997,8 +1080,10 @@ class _$TaskFailureMissingField implements TaskFailureMissingField {
     TResult? Function(int expected, int? actual)? statusCode,
     TResult? Function(Type expected, Type actual)? cast,
     TResult? Function(dynamic source)? jsonDecode,
-    TResult? Function(Type expected)? model,
+    TResult? Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult? Function(String field)? missingField,
+    TResult? Function(String field)? nullField,
   }) {
     return missingField?.call(field);
   }
@@ -1010,8 +1095,10 @@ class _$TaskFailureMissingField implements TaskFailureMissingField {
     TResult Function(int expected, int? actual)? statusCode,
     TResult Function(Type expected, Type actual)? cast,
     TResult Function(dynamic source)? jsonDecode,
-    TResult Function(Type expected)? model,
+    TResult Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
     TResult Function(String field)? missingField,
+    TResult Function(String field)? nullField,
     required TResult orElse(),
   }) {
     if (missingField != null) {
@@ -1029,6 +1116,7 @@ class _$TaskFailureMissingField implements TaskFailureMissingField {
     required TResult Function(TaskFailureJsonDecode value) jsonDecode,
     required TResult Function(TaskFailureModel value) model,
     required TResult Function(TaskFailureMissingField value) missingField,
+    required TResult Function(TaskFailureNullField value) nullField,
   }) {
     return missingField(this);
   }
@@ -1042,6 +1130,7 @@ class _$TaskFailureMissingField implements TaskFailureMissingField {
     TResult? Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult? Function(TaskFailureModel value)? model,
     TResult? Function(TaskFailureMissingField value)? missingField,
+    TResult? Function(TaskFailureNullField value)? nullField,
   }) {
     return missingField?.call(this);
   }
@@ -1055,6 +1144,7 @@ class _$TaskFailureMissingField implements TaskFailureMissingField {
     TResult Function(TaskFailureJsonDecode value)? jsonDecode,
     TResult Function(TaskFailureModel value)? model,
     TResult Function(TaskFailureMissingField value)? missingField,
+    TResult Function(TaskFailureNullField value)? nullField,
     required TResult orElse(),
   }) {
     if (missingField != null) {
@@ -1071,5 +1161,174 @@ abstract class TaskFailureMissingField implements TaskFailure {
   String get field;
   @JsonKey(ignore: true)
   _$$TaskFailureMissingFieldCopyWith<_$TaskFailureMissingField> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TaskFailureNullFieldCopyWith<$Res> {
+  factory _$$TaskFailureNullFieldCopyWith(_$TaskFailureNullField value,
+          $Res Function(_$TaskFailureNullField) then) =
+      __$$TaskFailureNullFieldCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String field});
+}
+
+/// @nodoc
+class __$$TaskFailureNullFieldCopyWithImpl<$Res>
+    extends _$TaskFailureCopyWithImpl<$Res, _$TaskFailureNullField>
+    implements _$$TaskFailureNullFieldCopyWith<$Res> {
+  __$$TaskFailureNullFieldCopyWithImpl(_$TaskFailureNullField _value,
+      $Res Function(_$TaskFailureNullField) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? field = null,
+  }) {
+    return _then(_$TaskFailureNullField(
+      field: null == field
+          ? _value.field
+          : field // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$TaskFailureNullField implements TaskFailureNullField {
+  _$TaskFailureNullField({required this.field});
+
+  @override
+  final String field;
+
+  @override
+  String toString() {
+    return 'TaskFailure.nullField(field: $field)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TaskFailureNullField &&
+            (identical(other.field, field) || other.field == field));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, field);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TaskFailureNullFieldCopyWith<_$TaskFailureNullField> get copyWith =>
+      __$$TaskFailureNullFieldCopyWithImpl<_$TaskFailureNullField>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(DioException exception) request,
+    required TResult Function(int expected, int? actual) statusCode,
+    required TResult Function(Type expected, Type actual) cast,
+    required TResult Function(dynamic source) jsonDecode,
+    required TResult Function(
+            Type expected, Object? error, StackTrace? stackTrace)
+        model,
+    required TResult Function(String field) missingField,
+    required TResult Function(String field) nullField,
+  }) {
+    return nullField(field);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(DioException exception)? request,
+    TResult? Function(int expected, int? actual)? statusCode,
+    TResult? Function(Type expected, Type actual)? cast,
+    TResult? Function(dynamic source)? jsonDecode,
+    TResult? Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
+    TResult? Function(String field)? missingField,
+    TResult? Function(String field)? nullField,
+  }) {
+    return nullField?.call(field);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(DioException exception)? request,
+    TResult Function(int expected, int? actual)? statusCode,
+    TResult Function(Type expected, Type actual)? cast,
+    TResult Function(dynamic source)? jsonDecode,
+    TResult Function(Type expected, Object? error, StackTrace? stackTrace)?
+        model,
+    TResult Function(String field)? missingField,
+    TResult Function(String field)? nullField,
+    required TResult orElse(),
+  }) {
+    if (nullField != null) {
+      return nullField(field);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(TaskFailureRequest value) request,
+    required TResult Function(TaskFailureStatusCode value) statusCode,
+    required TResult Function(TaskFailureCast value) cast,
+    required TResult Function(TaskFailureJsonDecode value) jsonDecode,
+    required TResult Function(TaskFailureModel value) model,
+    required TResult Function(TaskFailureMissingField value) missingField,
+    required TResult Function(TaskFailureNullField value) nullField,
+  }) {
+    return nullField(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(TaskFailureRequest value)? request,
+    TResult? Function(TaskFailureStatusCode value)? statusCode,
+    TResult? Function(TaskFailureCast value)? cast,
+    TResult? Function(TaskFailureJsonDecode value)? jsonDecode,
+    TResult? Function(TaskFailureModel value)? model,
+    TResult? Function(TaskFailureMissingField value)? missingField,
+    TResult? Function(TaskFailureNullField value)? nullField,
+  }) {
+    return nullField?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(TaskFailureRequest value)? request,
+    TResult Function(TaskFailureStatusCode value)? statusCode,
+    TResult Function(TaskFailureCast value)? cast,
+    TResult Function(TaskFailureJsonDecode value)? jsonDecode,
+    TResult Function(TaskFailureModel value)? model,
+    TResult Function(TaskFailureMissingField value)? missingField,
+    TResult Function(TaskFailureNullField value)? nullField,
+    required TResult orElse(),
+  }) {
+    if (nullField != null) {
+      return nullField(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TaskFailureNullField implements TaskFailure {
+  factory TaskFailureNullField({required final String field}) =
+      _$TaskFailureNullField;
+
+  String get field;
+  @JsonKey(ignore: true)
+  _$$TaskFailureNullFieldCopyWith<_$TaskFailureNullField> get copyWith =>
       throw _privateConstructorUsedError;
 }
