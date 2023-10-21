@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_type_check
+
 import 'package:depths/depths.dart';
 import 'package:depths/failures/task_failures.dart';
 import 'package:dio/dio.dart';
@@ -72,13 +74,13 @@ void main() async {
   group('safeStatusCode', () {
     test('expected 200, actual 201', () async {
       dioAdapter.onGet('statusCode=201', (server) => server.reply(201, {}));
-      final either = await dio.get('statusCode=201').safeRequest().safeStatusCode(expect: 200).run();
+      final either = await dio.get('statusCode=201').safeRequest().safeStatusCodes(expect: [200]).run();
       either.fold((l) => expect(l is TaskFailureStatusCode, true), (r) => fail(r.toString()));
     });
 
     test('expected 200, actual 200', () async {
       dioAdapter.onGet('statusCode=200', (server) => server.reply(200, {}));
-      final either = await dio.get('statusCode=200').safeRequest().safeStatusCode(expect: 200).run();
+      final either = await dio.get('statusCode=200').safeRequest().safeStatusCodes(expect: [200]).run();
       either.fold((l) => fail(l.toString()), (r) => expect(r is Response, true));
     });
   });

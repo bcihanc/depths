@@ -22,6 +22,54 @@ extension ContextExtension on BuildContext {
   /// Short for `Navigator.of(context)`.
   NavigatorState get navigator => Navigator.of(this);
 
-  /// hides soft keyboard using platform channel
-  void hideKeyboard() => helpers.hideKeyboard(this);
+  Flushbar<T> showSuccessFlushBar<T>(String message) {
+    return Flushbar<T>(
+      message: message,
+      messageColor: Colors.white,
+      flushbarPosition: FlushbarPosition.TOP,
+      flushbarStyle: FlushbarStyle.GROUNDED,
+      isDismissible: true,
+      duration: const Duration(seconds: 3),
+      icon: const Icon(LineIcons.checkCircle, color: Colors.white),
+      shouldIconPulse: false,
+      backgroundColor: Colors.green,
+    )..show(this);
+  }
+
+  Flushbar<T> showErrorFlushBar<T>(String message) {
+    return Flushbar<T>(
+      message: message,
+      messageColor: Theme.of(this).colorScheme.onError,
+      flushbarPosition: FlushbarPosition.TOP,
+      flushbarStyle: FlushbarStyle.GROUNDED,
+      isDismissible: true,
+      duration: const Duration(seconds: 3),
+      icon: Icon(LineIcons.exclamationCircle, color: Theme.of(this).colorScheme.onError),
+      shouldIconPulse: false,
+      backgroundColor: Theme.of(this).colorScheme.error,
+    )..show(this);
+  }
+
+  Flushbar<T> showInfoFlushBar<T>(String message) {
+    return Flushbar<T>(
+      message: message,
+      messageColor: Colors.white,
+      flushbarPosition: FlushbarPosition.TOP,
+      flushbarStyle: FlushbarStyle.GROUNDED,
+      isDismissible: true,
+      duration: const Duration(seconds: 3),
+      icon: const Icon(LineIcons.infoCircle, color: Colors.white),
+      shouldIconPulse: false,
+      backgroundColor: Colors.blue,
+    )..show(this);
+  }
+
+  void hideKeyboard() {
+    final currentFocus = FocusScope.of(this);
+    SystemChannels.textInput.invokeMethod<dynamic>('TextInput.hide');
+    if (currentFocus.hasFocus) {
+      currentFocus.unfocus();
+      currentFocus.focusedChild?.unfocus();
+    }
+  }
 }

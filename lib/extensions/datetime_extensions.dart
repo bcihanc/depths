@@ -74,6 +74,8 @@ extension DateTimeScrewdriver on DateTime {
     return day == now.day && month == now.month && year == now.year;
   }
 
+  bool get isYesterday => dateOnly == DateTime.now().subtract(1.days).dateOnly;
+
   /// Returns true if [this] occurs in past
   /// This doesn't account for time.
   bool get isPast => isBefore(DateTime.now());

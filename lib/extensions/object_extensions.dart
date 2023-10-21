@@ -35,14 +35,14 @@
 part of depths;
 
 /// Extensions for nullable types
-extension ObjectScrewdriver<T extends Object?> on T {
-  /// Returns true if the object is null
-  bool get isNull => this == null;
-
-  /// Returns true if the object is not null
-  bool get isNotNull => this != null;
-
-  Widget widgetIsNotNull(Widget Function(T value) test) {
-    return isNotNull ? test(this) : const SizedBox.shrink();
-  }
-}
+// extension ObjectScrewdriver<T extends Object?> on T {
+//   /// Returns true if the object is null
+//   bool get isNull => this == null;
+//
+//   /// Returns true if the object is not null
+//   bool get isNotNull => this != null;
+//
+//   Widget widgetIsNotNull(Widget Function(T value) test) {
+//     return isNotNull ? test(this) : const SizedBox.shrink();
+//   }
+// }

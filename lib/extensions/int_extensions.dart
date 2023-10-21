@@ -69,7 +69,7 @@ extension IntScrewdriver<T> on int {
   /// is a single digit value.
   String twoDigits() => this < 10 ? '0$this' : toString();
 
-  Future<void> get secondsWait async => await Future.delayed(Duration(milliseconds: this));
+  Future<void> get secondsWait => Future.delayed(Duration(milliseconds: this));
 }
 
 /// Generates a non-negative random integer uniformly distributed in the range

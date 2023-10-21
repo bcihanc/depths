@@ -11,7 +11,7 @@ sealed class TaskFailure with _$TaskFailure {
   }) = TaskFailureRequest;
 
   factory TaskFailure.statusCode({
-    required int expected,
+    required List<int> expected,
     int? actual,
   }) = TaskFailureStatusCode;
 
@@ -21,8 +21,12 @@ sealed class TaskFailure with _$TaskFailure {
   }) = TaskFailureCast;
 
   factory TaskFailure.jsonDecode({
-    required dynamic source,
+    required String source,
   }) = TaskFailureJsonDecode;
+
+  factory TaskFailure.jsonEncode({
+    required Object source,
+  }) = TaskFailureJsonEncode;
 
   factory TaskFailure.model({
     required Type expected,
@@ -34,7 +38,20 @@ sealed class TaskFailure with _$TaskFailure {
     required String field,
   }) = TaskFailureMissingField;
 
+  factory TaskFailure.containField({
+    required String field,
+  }) = TaskFailureContainField;
+
   factory TaskFailure.nullField({
     required String field,
   }) = TaskFailureNullField;
+
+  factory TaskFailure.message({
+    required String message,
+  }) = TaskFailureMessage;
+
+  factory TaskFailure.errorWithStackTrace(
+    dynamic error,
+    StackTrace stackTrace,
+  ) = TaskFailureErrorWithStackTrace;
 }

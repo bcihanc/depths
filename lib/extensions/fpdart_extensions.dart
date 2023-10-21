@@ -1,17 +1,17 @@
 part of depths;
 
 extension FutureTaskEither on Future<Response> {
-  // Level: 1 - request
   TaskEither<TaskFailure, Response<dynamic>> safeRequest() =>
       TaskEither<TaskFailure, Response<dynamic>>.tryCatch(() => this, (error, stackTrace) => TaskFailure.request(exception: error as DioException));
 }
 
 extension TaskEitherResponse on TaskEither<TaskFailure, Response> {
-  // Level: 2 - statusCode
-  TaskEither<TaskFailure, Response> safeStatusCode({int? expect}) => chainEither<Response>((r) => Either<TaskFailure, Response>.fromPredicate(
-      r, (r) => r.statusCode == (expect ?? HttpStatus.ok), (r) => TaskFailure.statusCode(expected: (expect ?? HttpStatus.ok), actual: r.statusCode)));
+  TaskEither<TaskFailure, Response> safeStatusCodes({List<int> expect = const [200]}) => chainEither<Response>((r) {
+        return Either<TaskFailure, Response>.fromPredicate(r, (r) {
+          return expect.any((element) => element == r.statusCode || r.statusCode == HttpStatus.ok);
+        }, (r) => TaskFailure.statusCode(expected: expect, actual: r.statusCode));
+      });
 
-  // Level: 3 - response data
   TaskEither<TaskFailure, Map<String, dynamic>> safeCastMap() {
     return chainEither<Map<String, dynamic>>((r) {
       if (r.data is Map<String, dynamic>) {
@@ -26,6 +26,19 @@ extension TaskEitherResponse on TaskEither<TaskFailure, Response> {
       }
     });
   }
+
+  TaskEither<TaskFailure, String> safeCastString() {
+    return chainEither<String>((r) {
+      if (r.data is String) {
+        return Either<TaskFailure, String>.safeCast(r.data, (r) => TaskFailure.cast(expected: String, actual: r.runtimeType));
+      } else if (r.data is Map<String, dynamic>) {
+        return Either<TaskFailure, Map<String, dynamic>>.safeCast(r.data, (r) => TaskFailure.cast(expected: String, actual: r.runtimeType))
+            .flatMap((a) => Either<TaskFailure, String>.tryCatch(() => jsonEncode(r.data), (error, stackTrace) => TaskFailure.jsonEncode(source: r.data)));
+      } else {
+        return Either<TaskFailure, String>.left(TaskFailure.cast(expected: String, actual: r.data.runtimeType));
+      }
+    });
+  }
 }
 
 extension TaskEitherMap on TaskEither<TaskFailure, Map<String, dynamic>> {
@@ -37,6 +50,22 @@ extension TaskEitherMap on TaskEither<TaskFailure, Map<String, dynamic>> {
       return Either<TaskFailure, dynamic>.fromNullable(r, () => TaskFailure.nullField(field: field));
     }).chainEither((r) {
       return Either<TaskFailure, Map<String, dynamic>>.safeCast(r, (r) => TaskFailure.cast(expected: Map<String, dynamic>, actual: r.runtimeType));
+    });
+  }
+
+  TaskEither<TaskFailure, List<Map<String, dynamic>>> safeMapListField({required String field}) {
+    return chainEither((r) {
+      return r.lookup(field).toEither<TaskFailure>(() => TaskFailure.missingField(field: field));
+    }).chainEither((r) {
+      return Either<TaskFailure, dynamic>.fromNullable(r, () => TaskFailure.nullField(field: field));
+    }).chainEither((r) {
+      return Either<TaskFailure, List<dynamic>>.safeCast(r, (r) => TaskFailure.cast(expected: List<dynamic>, actual: r.runtimeType));
+    }).chainEither((r) {
+      return Either<TaskFailure, List<Map<String, dynamic>>>.tryCatch(() {
+        return r.map((e) => e as Map<String, dynamic>).toList();
+      }, (error, stackTrace) {
+        return TaskFailure.cast(expected: List<Map<String, dynamic>>, actual: r.runtimeType);
+      });
     });
   }
 
@@ -55,18 +84,4 @@ extension TaskEitherListMap on TaskEither<TaskFailure, List<Map<String, dynamic>
           }, (error, stackTrace) {
             return TaskFailure.model(expected: T, error: error, stackTrace: stackTrace);
           }));
-}
-
-extension TaskEitherEmitter<T> on TaskEither<TaskFailure, T> {
-  Emitter<Either<TaskFailure, T>> emitter({String? name, bool keepAlive = false, List<Object?>? args}) {
-    return Emitter(
-      (ref, emit) async {
-        final result = await run();
-        emit(result);
-      },
-      name: name,
-      keepAlive: keepAlive,
-      args: args,
-    );
-  }
 }

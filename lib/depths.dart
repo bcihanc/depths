@@ -6,20 +6,17 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:another_flushbar/flushbar.dart';
-import 'package:creator/creator.dart';
 import 'package:depths/failures/task_failures.dart';
-import 'package:depths/helpers/theme_manager.dart';
 import 'package:depths/observers/clear_focus_navigator_observer.dart';
-import 'package:depths/observers/creator_observer.dart';
+import 'package:depths/observers/pods_observer.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:logger/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 import 'helpers/helper_functions.dart' as helpers;
@@ -27,7 +24,6 @@ import 'helpers/helper_functions.dart' as helpers;
 part 'extensions/bool_extensions.dart';
 part 'extensions/color_extensions.dart';
 part 'extensions/context_extensions.dart';
-part 'extensions/creator_extensions.dart';
 part 'extensions/datetime_extensions.dart';
 part 'extensions/double_extensions.dart';
 part 'extensions/fpdart_extensions.dart';
@@ -38,17 +34,10 @@ part 'extensions/object_extensions.dart';
 part 'extensions/primitives_extensions.dart';
 part 'extensions/state_extensions.dart';
 part 'extensions/string_extensions.dart';
-part 'widgets/flushbars.dart';
 part 'widgets/hide_keyboard.dart';
 
-class _DepthsObservers {
-  _DepthsObservers._();
-
-  static final _DepthsObservers _instance = _DepthsObservers._();
-
-  factory _DepthsObservers() => _instance;
-
-  final _sentryLoggerInstance = Logger(
+class DepthsObservers {
+  static final _sentryLoggerInstance = Logger(
     printer: PrefixPrinter(PrettyPrinter(
       methodCount: 1,
       errorMethodCount: 8,
@@ -59,7 +48,7 @@ class _DepthsObservers {
     )),
   );
 
-  void sentryLogObserver(
+  static void sentryLogObserver(
     SentryLevel level,
     String message, {
     String? logger,
@@ -87,36 +76,19 @@ class _DepthsObservers {
     }
   }
 
-  DepthsCreatorObserver creatorObserver({
-    bool logInReleaseMode = false,
-    bool logStateChange = true,
-    bool logState = true,
-    bool logError = true,
-    bool logDispose = false,
-    bool logWatcher = false,
-    bool logDerived = false,
-  }) =>
-      DepthsCreatorObserver(
-        logDerived: logDerived,
-        logDispose: logDispose,
-        logError: logError,
-        logInReleaseMode: logInReleaseMode,
-        logState: logState,
-        logStateChange: logStateChange,
-        logWatcher: logWatcher,
-      );
+  static ClearFocusNavigatorObserver clearFocusNavigatorObserver() => ClearFocusNavigatorObserver();
 
-  ClearFocusNavigatorObserver clearFocusNavigatorObserver() => ClearFocusNavigatorObserver();
+  static final DepthsPodObserver podObserver = DepthsPodObserver();
 }
 
-class _DepthsLogger {
-  _DepthsLogger._();
+class DepthsLoggers {
+  DepthsLoggers._();
 
-  static final _DepthsLogger _instance = _DepthsLogger._();
+  static final DepthsLoggers _instance = DepthsLoggers._();
 
-  factory _DepthsLogger() => _instance;
+  factory DepthsLoggers() => _instance;
 
-  final basic = Logger(
+  static final basic = Logger(
     printer: PrefixPrinter(PrettyPrinter(
       methodCount: 1,
       errorMethodCount: 8,
@@ -126,12 +98,15 @@ class _DepthsLogger {
       printTime: false,
     )),
   );
-}
 
-class Depths {
-  Depths._();
-
-  static final observers = _DepthsObservers._instance;
-  static final loggers = _DepthsLogger._instance;
-  static ThemeManager themeManager(Color color) => ThemeManager(color);
+  static final advanced = Logger(
+    printer: PrefixPrinter(PrettyPrinter(
+      methodCount: 8,
+      errorMethodCount: 8,
+      lineLength: 180,
+      colors: false,
+      printEmojis: true,
+      printTime: false,
+    )),
+  );
 }
