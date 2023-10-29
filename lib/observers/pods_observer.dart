@@ -26,7 +26,7 @@ class DepthsPodObserver extends ProviderObserver {
     ProviderBase<Object?> provider,
     ProviderContainer container,
   ) {
-    DepthsLoggers.basic.i('name : ${provider.name}');
+    DepthsLoggers.basic.w('name : ${provider.name}');
   }
 
   @override
