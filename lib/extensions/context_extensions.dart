@@ -53,14 +53,14 @@ extension ContextExtension on BuildContext {
   Flushbar<T> showInfoFlushBar<T>(String message) {
     return Flushbar<T>(
       message: message,
-      messageColor: Colors.white,
+      messageColor: colorScheme.onPrimaryContainer,
+      backgroundColor: colorScheme.primaryContainer,
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.GROUNDED,
       isDismissible: true,
       duration: const Duration(seconds: 3),
-      icon: const Icon(LineIcons.infoCircle, color: Colors.white),
+      icon: Icon(LineIcons.infoCircle, color: colorScheme.onPrimaryContainer),
       shouldIconPulse: false,
-      backgroundColor: Colors.blue,
     )..show(this);
   }
 

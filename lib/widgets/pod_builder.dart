@@ -1,54 +1,22 @@
 import 'package:depths/depths.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_use/flutter_use.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-class BuildsCountWidget extends HookWidget {
-  const BuildsCountWidget({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final buildCount = useBuildsCount();
-    return Stack(alignment: Alignment.topRight, children: [
-      child,
-      Container(
-        decoration: BoxDecoration(
-          color: context.colorScheme.primary,
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: Text(
-            buildCount.toString(),
-            style: context.textStyle.copyWith(fontSize: 8, color: context.colorScheme.onPrimary),
-          ),
-        ),
-      ),
-    ]);
-  }
-}
-
-class _AsyncPodBuilder<T> extends StatelessWidget {
+class _AsyncPodBuilder<T> extends StatefulWidget {
   const _AsyncPodBuilder({
     super.key,
     required this.pod,
     required this.builder,
     this.loadingBuilder,
-    this.onlyMock,
+    this.useMock,
     this.mock,
     this.skipError = false,
     this.skipLoadingOnRefresh = true,
     this.skipLoadingOnReload = false,
-  }) : assert(mock != null || onlyMock == null, 'mock must be provided if onlyMock is true');
+  }) : assert(mock != null || useMock == null, 'mock must be provided if onlyMock is true');
 
   final bool skipLoadingOnReload;
   final bool skipLoadingOnRefresh;
@@ -59,73 +27,67 @@ class _AsyncPodBuilder<T> extends StatelessWidget {
 
   final AsyncValue<T> pod;
   final T? mock;
-  final bool? onlyMock;
+  final bool? useMock;
+
+  @override
+  State<_AsyncPodBuilder<T>> createState() => _AsyncPodBuilderState<T>();
+}
+
+class _AsyncPodBuilderState<T> extends State<_AsyncPodBuilder<T>> {
+  bool isErrorPrinted = false;
 
   @override
   Widget build(BuildContext context) {
-    if (onlyMock == true)
+    if (widget.useMock == true) {
       return Stack(
         children: [
-          builder(context, mock!),
+          widget.builder(context, widget.mock!),
           if (kDebugMode)
             Positioned(
               top: 0,
               right: 0,
               child: Container(
-                color: Colors.orange,
+                decoration: BoxDecoration(
+                  color: Colors.orange,
+                  borderRadius: BorderRadius.circular(4),
+                ),
                 child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Text('m',
-                      style: context.textStyle.copyWith(
-                        fontSize: 10,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      )),
+                  padding: const EdgeInsets.all(2.0),
+                  child: Icon(Icons.bug_report_outlined, color: Colors.white, size: 14),
                 ),
               ),
             )
         ],
       );
+    }
 
-    return pod.when(
-      skipError: skipError,
-      skipLoadingOnReload: skipLoadingOnReload,
-      skipLoadingOnRefresh: skipLoadingOnRefresh,
-      data: (data) => builder(context, data),
+    return widget.pod.when(
+      skipError: widget.skipError,
+      skipLoadingOnReload: widget.skipLoadingOnReload,
+      skipLoadingOnRefresh: widget.skipLoadingOnRefresh,
+      data: (data) => widget.builder(context, data),
       loading: () =>
-          loadingBuilder?.call() ??
-          (mock == null
+          widget.loadingBuilder?.call() ??
+          (widget.mock == null
               ? CircularProgressIndicator.adaptive(strokeWidth: 2, valueColor: AlwaysStoppedAnimation(context.colorScheme.primary))
-              : Skeletonizer(child: builder(context, mock!))),
+              : Skeletonizer(child: widget.builder(context, widget.mock!))),
       error: (err, stack) {
+        if (isErrorPrinted == false) {
+          DepthsLoggers.advanced.e(err, stackTrace: stack);
+          isErrorPrinted = true;
+        }
         return GestureDetector(
             onTap: () {
               DepthsLoggers.advanced.e(err, stackTrace: stack);
               _showErrorBottomSheet(context, err, stack);
             },
-            child: mock != null
-                ? Stack(
-                    children: [
-                      Skeletonizer(effect: SoldColorEffect(color: Colors.red.withOpacity(.4)), child: builder(context, mock!)),
-                      if (kDebugMode)
-                        Positioned(
-                          top: 0,
-                          right: 0,
-                          child: Container(
-                            color: Colors.red,
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Text('e',
-                                  style: context.textStyle.copyWith(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  )),
-                            ),
-                          ),
-                        )
-                    ],
-                  )
+            child: widget.mock != null
+                ? Skeletonizer(
+                    effect: SoldColorEffect(color: Colors.red.withOpacity(.4)),
+                    child: widget.builder(
+                      context,
+                      widget.mock!,
+                    ))
                 : Icon(Icons.error_outline, color: context.colorScheme.error));
       },
     );
@@ -170,7 +132,7 @@ extension AsyncValueX<T> on AsyncValue<T> {
     Key? key,
     Widget? loading,
     T? mock,
-    bool? onlyMock,
+    bool? useMock,
     bool skipLoadingOnRefresh = true,
     bool skipLoadingOnReload = false,
     bool skipError = false,
@@ -182,7 +144,7 @@ extension AsyncValueX<T> on AsyncValue<T> {
         skipLoadingOnReload: skipLoadingOnReload,
         skipLoadingOnRefresh: skipLoadingOnRefresh,
         mock: mock,
-        onlyMock: onlyMock,
+        useMock: useMock,
         loadingBuilder: () => loading,
         builder: (context, data) => builder(data),
       );

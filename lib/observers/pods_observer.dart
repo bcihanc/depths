@@ -2,12 +2,25 @@ import 'package:depths/depths.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class DepthsPodObserver extends ProviderObserver {
+  DepthsPodObserver({
+    this.add = true,
+    this.update = true,
+    this.dispose = true,
+    this.fail = true,
+  });
+
+  final bool add;
+  final bool update;
+  final bool dispose;
+  final bool fail;
+
   @override
   void didAddProvider(
     ProviderBase<Object?> provider,
     Object? value,
     ProviderContainer container,
   ) {
+    if (add == false) return;
     DepthsLoggers.basic.t('name          : ${provider.name} \ninitialValue  : $value');
   }
 
@@ -18,7 +31,12 @@ class DepthsPodObserver extends ProviderObserver {
     Object? newValue,
     ProviderContainer container,
   ) {
-    DepthsLoggers.basic.i('name      : ${provider.name} \noldValue  : $previousValue \nnewValue  : ${newValue.toString()}');
+    if (update == false) return;
+
+    final exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+
+    DepthsLoggers.basic
+        .i('name      : ${provider.name} \noldValue  : $previousValue \nnewValue  : ${newValue.toString().replaceAll(exp, '').replaceAll('\n', '')}');
   }
 
   @override
@@ -26,6 +44,7 @@ class DepthsPodObserver extends ProviderObserver {
     ProviderBase<Object?> provider,
     ProviderContainer container,
   ) {
+    if (dispose == false) return;
     DepthsLoggers.basic.w('name : ${provider.name}');
   }
 
@@ -36,6 +55,7 @@ class DepthsPodObserver extends ProviderObserver {
     StackTrace stackTrace,
     ProviderContainer container,
   ) {
+    if (fail == false) return;
     DepthsLoggers.advanced.e('Provider failed: ${provider.name ?? provider.runtimeType}');
   }
 }

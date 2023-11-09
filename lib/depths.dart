@@ -48,14 +48,15 @@ class DepthsObservers {
     )),
   );
 
-  static void sentryLogObserver(
-    SentryLevel level,
-    String message, {
-    String? logger,
-    Object? exception,
-    StackTrace? stackTrace,
-  }) {
-    final isStackTraceEmptyOrNull = (stackTrace == null || stackTrace.toString().isEmpty);
+  static void sentryLogObserver(SentryLevel level,
+      String message, {
+        String? logger,
+        Object? exception,
+        StackTrace? stackTrace,
+      }) {
+    final isStackTraceEmptyOrNull = (stackTrace == null || stackTrace
+        .toString()
+        .isEmpty);
 
     switch (level) {
       case SentryLevel.info:
@@ -101,7 +102,7 @@ class DepthsLoggers {
 
   static final advanced = Logger(
     printer: PrefixPrinter(PrettyPrinter(
-      methodCount: 8,
+      methodCount: 1,
       errorMethodCount: 8,
       lineLength: 180,
       colors: false,

@@ -43,7 +43,7 @@ extension IntScrewdriver<T> on int {
   Duration get seconds => Duration(seconds: this);
 
   /// Returns [Duration] equal to [this] no. of milliseconds
-  Duration get milliseconds => Duration(milliseconds: this);
+  Duration get ms => Duration(milliseconds: this);
 
   Duration get days => Duration(days: this);
 
