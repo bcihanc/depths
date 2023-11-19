@@ -8,7 +8,7 @@
 import 'package:flutter/widgets.dart';
 
 /// Clears current focus when navigation happens.
-class ClearFocusNavigatorObserver extends NavigatorObserver {
+class DepthsClearFocusNavigatorObserver extends NavigatorObserver {
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);

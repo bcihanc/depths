@@ -51,8 +51,8 @@ class _AsyncPodBuilderState<T> extends State<_AsyncPodBuilder<T>> {
                   color: Colors.orange,
                   borderRadius: BorderRadius.circular(4),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(2.0),
                   child: Icon(Icons.bug_report_outlined, color: Colors.white, size: 14),
                 ),
               ),
@@ -105,7 +105,7 @@ class _AsyncPodBuilderState<T> extends State<_AsyncPodBuilder<T>> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Text(err.toString(), style: context.textStyle.copyWith(color: context.colorScheme.error)),
+                Text(err.toString(), style: context.textStyle?.copyWith(color: context.colorScheme.error)),
                 const SizedBox(height: 8),
                 ListView.separated(
                   shrinkWrap: true,

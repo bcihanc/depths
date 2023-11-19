@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   dio:
+  encrypt:
   hooks_riverpod:
   flutter_hooks:
   flutter_use:
@@ -28,6 +29,7 @@ dependencies:
   sentry_flutter:
   stack_trace:
   intl:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

@@ -2,7 +2,7 @@ part of depths;
 
 extension ContextExtension on BuildContext {
   /// Short for `DefaultTextStyle.of(context).style`.
-  TextStyle get textStyle => DefaultTextStyle.of(this).style;
+  TextStyle? get textStyle => textTheme.bodyMedium;
 
   /// Short for `Theme.of(context)`.
   ThemeData get theme => Theme.of(this);

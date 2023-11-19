@@ -1,17 +1,9 @@
-// Copyright © 2022 Birju Vachhani. All rights reserved.
-// Use of this source code is governed by a BSD 3-Clause License that can be
-// found in the LICENSE file.
-
-// Author: Birju Vachhani
-// Created Date: September 01, 2020
-
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Key;
 import 'package:flutter/services.dart';
+import 'package:encrypt/encrypt.dart';
 
-/// Alias for closing the app by invoking [SystemNavigator.pop]
 Future<void> closeApp({bool animated = true}) => SystemNavigator.pop(animated: animated);
 
-/// hides soft keyboard using platform channel
 void hideKeyboard(BuildContext context) {
   final currentFocus = FocusScope.of(context);
   SystemChannels.textInput.invokeMethod<dynamic>('TextInput.hide');
@@ -19,4 +11,20 @@ void hideKeyboard(BuildContext context) {
     currentFocus.unfocus();
     currentFocus.focusedChild?.unfocus();
   }
+}
+
+String encrypt({required String value, required String secret}) {
+  final key = Key.fromUtf8(secret);
+  final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
+  final initVector = IV.fromUtf8(secret.substring(0, 16));
+  final encryptedData = encrypter.encrypt(value, iv: initVector);
+  return encryptedData.base64;
+}
+
+String decrypt({required String value, required String secret}) {
+  final key = Key.fromUtf8(secret);
+  final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
+  final initVector = IV.fromUtf8(secret.substring(0, 16));
+  final encrypted = Encrypted.fromBase64(value);
+  return encrypter.decrypt(encrypted, iv: initVector);
 }
