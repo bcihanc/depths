@@ -12,6 +12,7 @@ class _AsyncPodBuilder<T> extends StatefulWidget {
     required this.builder,
     this.loadingBuilder,
     this.useMock,
+    this.useLoading = false,
     this.mock,
     this.skipError = false,
     this.skipLoadingOnRefresh = true,
@@ -23,11 +24,12 @@ class _AsyncPodBuilder<T> extends StatefulWidget {
   final bool skipError;
 
   final Widget Function(BuildContext context, T data) builder;
-  final Widget? Function()? loadingBuilder;
+  final Widget? Function(BuildContext context, T? data)? loadingBuilder;
 
   final AsyncValue<T> pod;
   final T? mock;
   final bool? useMock;
+  final bool? useLoading;
 
   @override
   State<_AsyncPodBuilder<T>> createState() => _AsyncPodBuilderState<T>();
@@ -38,6 +40,10 @@ class _AsyncPodBuilderState<T> extends State<_AsyncPodBuilder<T>> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.useLoading == true && widget.mock != null) {
+      return Skeletonizer(child: widget.builder(context, widget.mock!));
+    }
+
     if (widget.useMock == true) {
       return Stack(
         children: [
@@ -67,7 +73,7 @@ class _AsyncPodBuilderState<T> extends State<_AsyncPodBuilder<T>> {
       skipLoadingOnRefresh: widget.skipLoadingOnRefresh,
       data: (data) => widget.builder(context, data),
       loading: () =>
-          widget.loadingBuilder?.call() ??
+          widget.loadingBuilder?.call(context, widget.mock) ??
           (widget.mock == null
               ? CircularProgressIndicator.adaptive(strokeWidth: 2, valueColor: AlwaysStoppedAnimation(context.colorScheme.primary))
               : Skeletonizer(child: widget.builder(context, widget.mock!))),
@@ -130,9 +136,10 @@ extension AsyncValueX<T> on AsyncValue<T> {
   Widget widget(
     Widget Function(T value) builder, {
     Key? key,
-    Widget? loading,
+    Widget? Function(T? mock)? loading,
     T? mock,
     bool? useMock,
+    bool? useLoading,
     bool skipLoadingOnRefresh = true,
     bool skipLoadingOnReload = false,
     bool skipError = false,
@@ -145,7 +152,8 @@ extension AsyncValueX<T> on AsyncValue<T> {
         skipLoadingOnRefresh: skipLoadingOnRefresh,
         mock: mock,
         useMock: useMock,
-        loadingBuilder: () => loading,
+        useLoading: useLoading,
+        loadingBuilder: (context, mock) => loading?.call(mock),
         builder: (context, data) => builder(data),
       );
 }
