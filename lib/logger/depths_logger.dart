@@ -1,5 +1,14 @@
 part of depths;
 
+void prettyPrintJson(String input) {
+  const decoder = JsonDecoder();
+  const encoder = JsonEncoder.withIndent('  ');
+
+  final object = decoder.convert(input);
+  final prettyString = encoder.convert(object);
+  prettyString.split('\n').forEach((element) => debugPrint(element));
+}
+
 class DepthsLoggers {
   DepthsLoggers._();
 

@@ -11,6 +11,7 @@ class _AsyncPodBuilder<T> extends StatefulWidget {
     required this.pod,
     required this.builder,
     this.loadingBuilder,
+    this.errorBuilder,
     this.useMock,
     this.useLoading = false,
     this.mock,
@@ -25,6 +26,7 @@ class _AsyncPodBuilder<T> extends StatefulWidget {
 
   final Widget Function(BuildContext context, T data) builder;
   final Widget? Function(BuildContext context, T? data)? loadingBuilder;
+  final Widget? Function(BuildContext context, Object error, StackTrace stackTrace)? errorBuilder;
 
   final AsyncValue<T> pod;
   final T? mock;
@@ -82,6 +84,10 @@ class _AsyncPodBuilderState<T> extends State<_AsyncPodBuilder<T>> {
           DepthsLoggers.advanced.e(err, stackTrace: stack);
           isErrorPrinted = true;
         }
+        if (widget.errorBuilder != null) {
+          return widget.errorBuilder!(context, err, stack) ?? ErrorWidget(err);
+        }
+
         return GestureDetector(
             onTap: () {
               DepthsLoggers.advanced.e(err, stackTrace: stack);
@@ -137,6 +143,7 @@ extension AsyncValueX<T> on AsyncValue<T> {
     Widget Function(T value) builder, {
     Key? key,
     Widget? Function(T? mock)? loading,
+    Widget? Function(Object error)? error,
     T? mock,
     bool? useMock,
     bool? useLoading,
@@ -148,6 +155,7 @@ extension AsyncValueX<T> on AsyncValue<T> {
         key: key,
         pod: this,
         skipError: skipError,
+        errorBuilder: (context, err, stackTrace) => error?.call(err),
         skipLoadingOnReload: skipLoadingOnReload,
         skipLoadingOnRefresh: skipLoadingOnRefresh,
         mock: mock,
